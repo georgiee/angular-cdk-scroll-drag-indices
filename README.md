@@ -1,27 +1,34 @@
-# Example
+# CDK Drag & Drop vs Virtual Scroll (wrong indices?)
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.1.2.
+See this behavior:
+![preview.gif](preview.gif)
 
-## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+The code is minimal and I expect the Drag & Drop to work properly with CDK Scroll (virtual scroll container).
 
-## Code scaffolding
+```
+<cdk-virtual-scroll-viewport
+  maxBufferPx="0" minBufferPx="0"
+  itemSize="20" class="list" cdkDropList  (cdkDropListDropped)="dropRule($event)">
+  <div *cdkVirtualFor="let id of items; let index = index"
+  		class="item" cdkDrag>
+    works id: {{id}}
+  </div>
+</cdk-virtual-scroll-viewport>
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+```
 
-## Build
+In the component you can see the dropped handler:
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+```
+dropRule(event: CdkDragDrop<any>) {
+    const range = this.viewport.getRenderedRange();
+    const currentIndex = event.currentIndex;
+    const normalizedCurrentIndex = range.start + event.currentIndex;
+    console.log('indices', {normalizedCurrentIndex, currentIndex});
+    this.debugIndices = {normalizedCurrentIndex, currentIndex}
+  }
+```
 
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+It will correctly output an index of 0 for the first element if you drag and release immediately.
+Now scroll down to the last element, scroll back up and repeat. The drag & drop engine will calculate a wrong index for the physical list of elements. This index could theoretically be combined with the range value of the virtual list to create a "normalized" value. But it fails with the initial value: CDk Drag & Drop doesn't properly calculate the currentIndex value in virtual lists and it only happens after your used the scroll functionality. It seems that the drop container gets confused by the virtual items.

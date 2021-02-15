@@ -1,0 +1,19 @@
+:host {
+	display: block;
+}
+
+.list {
+	height: 100px;
+	outline: 1px solid red;
+}
+
+.item {
+	height: 20px;
+	padding: 2px;
+	border-left: 5px solid blue;
+	box-sizing: border-box;
+}
+
+.item:nth-child(odd){
+	border-left: 5px solid green
+}
