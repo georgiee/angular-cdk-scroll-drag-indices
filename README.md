@@ -35,27 +35,23 @@ Now scroll down to the last element, scroll back up and repeat. The drag & drop 
 
 
 ```
-Angular CLI: 11.1.4
+Angular CLI: 11.2.0
 Node: 14.15.4
 OS: darwin x64
 
-Angular: 11.1.2
-... animations, common, compiler, compiler-cli, core, forms
-... platform-browser, platform-browser-dynamic, router
+Angular: 11.2.0
+... animations, cdk, cli, common, compiler, compiler-cli, core
+... forms, platform-browser, platform-browser-dynamic, router
 Ivy Workspace: Yes
 
 Package                         Version
 ---------------------------------------------------------
-@angular-devkit/architect       0.1101.4
-@angular-devkit/build-angular   0.1101.4
-@angular-devkit/core            11.1.4
-@angular-devkit/schematics      11.1.4
-@angular/cdk                    11.2.0
-@angular/cli                    11.1.4
-@schematics/angular             11.1.4
-@schematics/update              0.1101.4
+@angular-devkit/architect       0.1102.0
+@angular-devkit/build-angular   0.1102.0
+@angular-devkit/core            11.2.0
+@angular-devkit/schematics      11.2.0
+@schematics/angular             11.2.0
+@schematics/update              0.1102.0
 rxjs                            6.6.3
 typescript                      4.1.5
-
-✨  Done in 0.54s.
 ```
